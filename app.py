@@ -5,7 +5,7 @@ from model import *
 app = Flask(__name__)
 
 model_load(feedforward, 'model_parameters/', 'linear_politifact')
-
+model_load(recurrent, 'model_parameters/', 'lstm_politifact')
 
 @app.route('/')
 def hello():
@@ -73,7 +73,7 @@ def preview_linker(linkage, tag):
     output_lstm = '1 ERROR' #check for error without passing error
 
     output_linear = F.sigmoid(prediction(inp, feedforward)).round()
-    # output_lstm = F.sigmoid(prediction(inp.long(), recurrent))
+    output_lstm = F.sigmoid(prediction(inp.long(), recurrent))
 
     all_types = list(pd.read_csv(data_dict['politifact_clean'])['veracity'].unique())
 
@@ -82,24 +82,24 @@ def preview_linker(linkage, tag):
     elif output_linear == 1:
         output_linear = f"Substantial Bias: Prediction = {output_linear}"
 
-    # statement_type = ''
-    # if output_lstm <= 0.25:
-    #     statement_type = 'True'
-    # elif 0.25 < output_lstm <= 0.5:
-    #     statement_type = 'Mostly True'
-    # elif 0.5 < output_lstm <= 0.75:
-    #     statement_type = 'Mostly False'
-    # elif 0.75 < output_lstm <= 1:
-    #     statement_type = 'False'
-    # elif output_lstm > 1:
-    #     statement_type = 'Pants on Fire!'
+    statement_type = ''
+    if output_lstm <= 0.25:
+        statement_type = 'True'
+    elif 0.25 < output_lstm <= 0.5:
+        statement_type = 'Mostly True'
+    elif 0.5 < output_lstm <= 0.75:
+        statement_type = 'Mostly False'
+    elif 0.75 < output_lstm <= 1:
+        statement_type = 'False'
+    elif output_lstm > 1:
+        statement_type = 'Pants on Fire!'
 
-    # output_lstm = f"Veracity -> {statement_type}: {output_lstm}"
+    output_lstm = f"Veracity -> {statement_type}: {output_lstm}"
 
-    # if output_lstm == 0:
-    #     output_lstm = f"Limited Veracity: Prediction = {output_lstm}"
-    # elif output_lstm == 1:
-    #     output_lstm = f"Expressive Veracity: Prediction = {output_lstm}"
+    if output_lstm == 0:
+        output_lstm = f"Limited Veracity: Prediction = {output_lstm}"
+    elif output_lstm == 1:
+        output_lstm = f"Expressive Veracity: Prediction = {output_lstm}"
 
     
 

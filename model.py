@@ -172,6 +172,8 @@ max_len = len(train_set[1][0])
 ref_check = 1
 
 feedforward = FeedForward(ref_check, inp_size).to(device)
+recurrent = RecurrentClassifier(emb_dim, inp_size, 50, ref_check, 2, dropout=0.2).to(device)
+
 
 # with open('serialized/recurrent_empty.pickle', 'wb') as f:
 #     recurrent = pickle.load(f)
