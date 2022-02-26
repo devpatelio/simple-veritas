@@ -9,3 +9,4 @@ nltk==3.6.7
 pandas==1.4.1
 torch==1.9.0+cpu
 pytz==2021.3
+gunicorn
