@@ -1,0 +1,21 @@
+<!doctype html>
+{% block title%} Link Preview {% endblock %}
+
+{% block content %}
+<p>Link: {{ preview_link }}</p>
+<p>Author: {{ author_article }}</p>
+<p>Date: {{ published_article }}</p>
+<p>Top Image: {{ top_image }}</p>
+<p>All Images: {{ all_image }}</p>
+<p>Summary of {{ title_article }}:</p>
+<p> &#9 {{ summary_article }}</p>
+
+
+<p><br> &#9 {{ sentiment }}</p>
+<p><br> &#9 {{ bias_point }}</p>
+<p><br> &#9 {{ skew_point }}</p>
+
+
+
+</form>
+{% endblock %}
