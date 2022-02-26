@@ -2,7 +2,7 @@
 # $ conda create --name <env> --file <this file>
 # platform: osx-64
 
-flask=1.1.2
+Flask
 jinja2=2.11.2=py_0
 keras-preprocessing=1.1.2
 newspaper3k=0.2.8
