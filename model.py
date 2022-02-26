@@ -268,5 +268,4 @@ def prediction(inp, model):
     output = model(inp)
     return output
 
-model_load(feedforward, 'model_parameters/', 'linear_politifact')
 # model_load(recurrent, 'model_parameters/', 'lstm_politifact')

@@ -4,6 +4,9 @@ from flask import Flask, render_template, redirect, url_for, request
 from model import *
 app = Flask(__name__)
 
+model_load(feedforward, 'model_parameters/', 'linear_politifact')
+
+
 @app.route('/')
 def hello():
     return render_template("home.html")
@@ -69,15 +72,15 @@ def preview_linker(linkage, tag):
     output_linear = '0 ERROR'
     output_lstm = '1 ERROR' #check for error without passing error
 
-    output_linear = F.sigmoid(prediction(inp, feedforward)).round()
+    # output_linear = F.sigmoid(prediction(inp, feedforward)).round()
     # output_lstm = F.sigmoid(prediction(inp.long(), recurrent))
 
     all_types = list(pd.read_csv(data_dict['politifact_clean'])['veracity'].unique())
 
-    if output_linear == 0:
-        output_linear = f"Little Bias: Prediction = {output_linear}"
-    elif output_linear == 1:
-        output_linear = f"Substantial Bias: Prediction = {output_linear}"
+    # if output_linear == 0:
+    #     output_linear = f"Little Bias: Prediction = {output_linear}"
+    # elif output_linear == 1:
+    #     output_linear = f"Substantial Bias: Prediction = {output_linear}"
 
     # statement_type = ''
     # if output_lstm <= 0.25:
