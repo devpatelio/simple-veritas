@@ -241,7 +241,7 @@ def model_load(net, PATH, name, export=True):
         torch.save(net.state_dict(), PATH+name+'.pth')
         return PATH+name+'.pth'
     else:
-        net.torch.load_state_dict(torch.load(PATH + name + '.pth'))
+        net.load_state_dict(torch.load(PATH + name + '.pth'))
         net.eval()
         return net
 
