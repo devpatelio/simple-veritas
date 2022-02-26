@@ -118,7 +118,13 @@ test_loader = DataLoader(test_set, batch_size=BATCH_SIZE, shuffle=True)
 a = iter(train_loader)
 b = np.array(next(a)[0])
 inp_size = (b.shape)[1]
-emb_dim = 6712800
+
+
+import itertools
+ab = list(itertools.chain(*[i[0] for i in clean_truth_data]))
+ab = set([int(i) for i in ab])
+emb_dim = len(ab)
+print(emb_dim)
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -173,8 +179,9 @@ max_len = len(train_set[1][0])
 ref_check = 1
 
 feedforward = FeedForward(ref_check, inp_size).to(device)
-# recurrent = RecurrentClassifier(emb_dim, inp_size, 50, ref_check, 2, dropout=0.2).to(device)
-
+print(feedforward)
+recurrent = RecurrentClassifier(emb_dim, inp_size, 50, ref_check, 2, dropout=0.2).to(device)
+print(recurrent)
 
 # with open('serialized/recurrent_empty.pickle', 'wb') as f:
 #     recurrent = pickle.load(f)
