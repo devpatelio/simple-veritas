@@ -3,11 +3,10 @@
 # platform: osx-64
 
 Flask
-jinja2=2.11.2=py_0
-keras-preprocessing=1.1.2
-newspaper3k=0.2.8
-nltk=3.6.7
-pandas=1.4.1
-pytorch=1.10.2=py3.9_0
-pytorch-mutex=1.0=cpu
-pytz=2021.3
+keras-preprocessing==1.1.2
+newspaper3k==0.2.8
+nltk==3.6.7
+pandas==1.4.1
+pytorch==1.10.2==py3.9_0
+pytorch-mutex==1.0=cpu
+pytz==2021.3
