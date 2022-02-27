@@ -15,9 +15,9 @@ def hello():
     return render_template("home.html")
 
 
-# @app.errorhandler(500)
-# def page_not_found(e):
-#     return render_template('500.html')
+@app.errorhandler(500)
+def page_not_found(e):
+    return render_template('500.html')
 
 @app.route('/link', methods=["POST", "GET"])
 def link():
