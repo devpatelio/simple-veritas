@@ -71,7 +71,7 @@ class PreprocessingDataset(Dataset):
                 maximum_length = len(i)
                 max_idx = idx
         maximum_length = 600
-        t = Tokenizer(num_words=600, filters='\n.,:!"#$()&@%^()-_`~[];.,{|}')
+        t = Tokenizer(filters='\n.,:!"#$()&@%^()-_`~[];.,{|}')
         t.fit_on_texts(x_data)
         sequences = t.texts_to_sequences(x_data)
         sequences = sequence.pad_sequences(sequences, maxlen=maximum_length)
@@ -120,11 +120,13 @@ b = np.array(next(a)[0])
 inp_size = (b.shape)[1]
 
 
-import itertools
-ab = list(itertools.chain(*[i[0] for i in clean_truth_data]))
-ab = set([int(i) for i in ab])
-emb_dim = len(ab)
-print(emb_dim)
+# import itertools
+# ab = list(itertools.chain(*[i[0] for i in clean_truth_data]))
+# ab = set([int(i) for i in ab])
+# emb_dim = len(ab)
+# print(emb_dim)
+
+emb_dim = 13889
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -179,9 +181,9 @@ max_len = len(train_set[1][0])
 ref_check = 1
 
 feedforward = FeedForward(ref_check, inp_size).to(device)
-print(feedforward)
+# print(feedforward)
 recurrent = RecurrentClassifier(emb_dim, inp_size, 50, ref_check, 2, dropout=0.2).to(device)
-print(recurrent)
+# print(recurrent)
 
 # with open('serialized/recurrent_empty.pickle', 'wb') as f:
 #     recurrent = pickle.load(f)
@@ -248,7 +250,7 @@ def model_load(net, PATH, name, export=True):
         torch.save(net.state_dict(), PATH+name+'.pth')
         return PATH+name+'.pth'
     else:
-        net.load_state_dict(torch.load(PATH + name + '.pth'))
+        net.load_state_dict(torch.load(PATH + name + '.pth', map_location=torch.device('cpu')))
         net.eval()
         return net
 
