@@ -14,6 +14,11 @@ ort_recurrent = ort.InferenceSession("lstm.onnx")
 def hello():
     return render_template("home.html")
 
+
+# @app.errorhandler(500)
+# def page_not_found(e):
+#     return render_template('500.html')
+
 @app.route('/link', methods=["POST", "GET"])
 def link():
     if request.method == "POST":
@@ -80,6 +85,8 @@ def preview_linker(linkage, tag):
 
     all_types = list(pd.read_csv(data_dict['politifact_clean'])['veracity'].unique())
 
+    output_linear = int(output_linear)
+    
     if output_linear == 0:
         output_linear = f"Little Bias: Prediction = {output_linear}"
     elif output_linear == 1:
@@ -104,7 +111,7 @@ def preview_linker(linkage, tag):
         statement_type = 'Pants on Fire!'
 
 # 
-    output_lstm = f"Veracity -> {statement_type}: {output_lstm}"
+    output_lstm = f"Veracity: {statement_type} = {output_lstm}"
 
     # if output_lstm == 0:
     #     output_lstm = f"Limited Veracity: Prediction = {output_lstm}"
