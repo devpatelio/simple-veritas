@@ -7,8 +7,10 @@ import onnxruntime as ort
 
 app = Flask(__name__)
 
-model_load(feedforward, 'model_parameters/', 'linear_politifact', export=False)
-ort_recurrent = ort.InferenceSession("lstm.onnx")
+model_load(feedforward, 'model_parameters/', 'linear_politifact')
+# ort_recurrent = ort.InferenceSession("lstm.onnx")
+model_load(recurrent, 'model_parameters/', 'lstm_politifact')
+
 
 @app.route('/')
 def hello():
@@ -81,7 +83,7 @@ def preview_linker(linkage, tag):
     output_lstm = '1 ERROR' #check for error without passing error
 
     output_linear = F.sigmoid(prediction(inp, feedforward)).round()
-    # output_lstm = F.sigmoid(prediction(inp.long(), recurrent))
+    output_lstm = F.sigmoid(prediction(inp.long(), recurrent))
 
     all_types = list(pd.read_csv(data_dict['politifact_clean'])['veracity'].unique())
 
@@ -96,8 +98,8 @@ def preview_linker(linkage, tag):
         "x": np.int64(inp.cpu())
     }
 
-    output_lstm = ort_recurrent.run(None, ort_recurrent_inputs)
-    output_lstm = output_lstm[0][0][0]
+    # output_lstm = ort_recurrent.run(None, ort_recurrent_inputs)
+    # output_lstm = output_lstm[0][0][0]
     statement_type = ''
     if output_lstm <= 0.25:
         statement_type = 'True'
