@@ -90,9 +90,9 @@ def preview_linker(linkage, tag):
     output_linear = float(output_linear)
     output_lstm = float(output_lstm)
     
-    if output_linear == 0:
+    if output_linear <= 0.5:
         output_linear = f"Little Bias: Prediction = {output_linear}"
-    elif output_linear == 1:
+    elif 0.5 < output_linear <= 1:
         output_linear = f"Substantial Bias: Prediction = {output_linear}"
 
     ort_recurrent_inputs = {
