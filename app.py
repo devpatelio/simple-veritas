@@ -82,12 +82,13 @@ def preview_linker(linkage, tag):
     output_linear = '0 ERROR'
     output_lstm = '1 ERROR' #check for error without passing error
 
-    output_linear = F.sigmoid(prediction(inp, feedforward)).round()
+    output_linear = F.sigmoid(prediction(inp, feedforward))
     output_lstm = F.sigmoid(prediction(inp.long(), recurrent))
 
     all_types = list(pd.read_csv(data_dict['politifact_clean'])['veracity'].unique())
 
-    output_linear = int(output_linear)
+    output_linear = float(output_linear)
+    output_lstm = float(output_lstm)
     
     if output_linear == 0:
         output_linear = f"Little Bias: Prediction = {output_linear}"
